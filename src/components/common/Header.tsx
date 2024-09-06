@@ -12,7 +12,7 @@ const Header = () => {
 	};
 
 	return (
-		<header className="p-4 flex justify-between bg-blue-400 text-white font-bold">
+		<header className="w-full p-4 flex justify-between bg-blue-400 text-white font-bold fixed">
 			<div>
 				<button className="hover:text-blue-800" onClick={() => navigate("/")}>
 					Minji`s Page
