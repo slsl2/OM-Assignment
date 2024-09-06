@@ -11,17 +11,15 @@ const Profile = () => {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const [avatar, setAvatar] = useState<File | null>(null);
-	const [avatarPreview, setAvatarPreview] = useState<string | null>(null); // 미리보기 URL
+	const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 	const [nickname, setNickname] = useState<string>("");
 
-	// 로그인하지 않은 경우 로그인 페이지로 리디렉션
 	useEffect(() => {
 		if (!accessToken) {
 			navigate("/login");
 		}
 	}, [accessToken, navigate]);
 
-	// 유저 프로필 정보 불러오기
 	const {
 		data: profile,
 		isPending,
@@ -36,7 +34,6 @@ const Profile = () => {
 		enabled: !!accessToken
 	});
 
-	// 프로필 업데이트 mutation
 	const mutation = useMutation({
 		mutationFn: async (formData: FormData) => {
 			if (!accessToken) throw new Error("No access token");
@@ -52,7 +49,6 @@ const Profile = () => {
 		}
 	});
 
-	// 프로필 업데이트 처리
 	const handleProfileUpdate = async () => {
 		const formData = new FormData();
 
@@ -78,7 +74,7 @@ const Profile = () => {
 		mutation.mutate(formData);
 	};
 
-	// 이미지 미리보기 설정
+	// 이미지 미리보기
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
@@ -88,9 +84,9 @@ const Profile = () => {
 	};
 
 	const handleReset = () => {
-		refetch(); // fetch를 다시 해서 데이터를 초기화
-		setAvatar(null); // 선택된 아바타 파일 초기화
-		setAvatarPreview(profile?.avatar || null); // 미리보기 다시 설정
+		refetch();
+		setAvatar(null);
+		setAvatarPreview(profile?.avatar || null);
 		setNickname(profile?.nickname || "");
 	};
 
@@ -102,21 +98,34 @@ const Profile = () => {
 	if (error) return <div>Error: {error instanceof Error ? error.message : "An error occurred"}</div>;
 
 	return (
-		<div>
-			<div>
-				<img className="w-16" src={avatarPreview || profile?.avatar || "/images/default-avatar.png"} alt="avatar" />
-				<h2>{profile?.id}</h2>
-				<input type="file" accept="image/*" onChange={handleImageChange} />
+		<div className="px-4 py-8 w-[80%] mx-auto flex flex-col items-center gap-2">
+			<h2 className="font-bold text-[20px] bg-gradient-text p-2 text-white">@{profile?.id}</h2>
+			<img className="w-[120px]" src={avatarPreview || profile?.avatar || "/images/default-avatar.png"} alt="avatar" />
+			<input type="file" accept="image/*" onChange={handleImageChange} />
+			<div className="flex gap-2 items-center">
+				<span>닉네임</span>
 				<input
 					type="text"
 					value={nickname}
 					onChange={(e) => setNickname(e.target.value)}
-					placeholder={profile?.nickname || "Nickname"}
+					placeholder={profile?.nickname || "닉네임"}
+					className="p-2 bg-gray-100"
+					maxLength={10}
 				/>
-				<button onClick={handleGoBack}>뒤로</button>
-				<button onClick={handleReset}>초기화</button>
-				<button onClick={handleProfileUpdate} disabled={mutation.isPending}>
-					{mutation.isPending ? "Updating..." : "Update Profile"}
+			</div>
+			<div className="flex flex-col gap-2 w-full mt-8">
+				<button className="p-2 bg-gray-200 rounded-[10px] w-full hover:bg-gray-300" onClick={handleGoBack}>
+					뒤로가기
+				</button>
+				<button className="p-2 bg-gray-200 rounded-[10px] w-full hover:bg-gray-300" onClick={handleReset}>
+					초기화
+				</button>
+				<button
+					className="p-2 text-white bg-blue-400 rounded-[10px] w-full hover:bg-blue-500"
+					onClick={handleProfileUpdate}
+					disabled={mutation.isPending}
+				>
+					수정완료
 				</button>
 			</div>
 		</div>
