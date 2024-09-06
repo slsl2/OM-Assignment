@@ -20,9 +20,8 @@ export const useAuthStore = create<AuthStateType>((set) => ({
 			setTimeout(() => {
 				localStorage.removeItem("accessToken");
 				localStorage.removeItem("expiresAt");
-				set({ accessToken: null }); // 상태 업데이트
+				set({ accessToken: null });
 				alert("로그인 정보 만료");
-				// navigate는 상태 업데이트 후에 호출하는 것이 좋음
 				window.location.href = "/login"; // 새로고침 대신 페이지 이동
 			}, 600000);
 		} else {
