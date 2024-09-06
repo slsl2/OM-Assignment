@@ -42,7 +42,6 @@ export const getUserProfileInfo = async (accessToken: string): Promise<UserProfi
 			Authorization: `Bearer ${accessToken}`
 		}
 	});
-	console.log(response.data);
 	return response.data;
 };
 
