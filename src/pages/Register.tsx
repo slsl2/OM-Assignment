@@ -16,8 +16,8 @@ const Register = () => {
 			navigate("/login");
 		},
 		onError: (error) => {
-			console.error("회원가입 중 오류가 발생했습니다:", error);
-			alert("회원가입 중 오류가 발생했습니다.");
+			console.error("회원가입 중 오류가 발생했습니다: ", error);
+			alert("회원가입 중 오류가 발생했습니다. 이미 존재하는 아이디일 수 있으니 다른 아이디로 다시 시도해보세요.");
 		}
 	});
 

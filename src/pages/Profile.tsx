@@ -28,7 +28,7 @@ const Profile = () => {
 	} = useQuery<UserProfileInfo>({
 		queryKey: ["userProfile"],
 		queryFn: () => {
-			if (!accessToken) return Promise.reject("No access token");
+			if (!accessToken) return Promise.reject("로그인 정보 없음");
 			return getUserProfileInfo(accessToken);
 		},
 		enabled: !!accessToken
@@ -36,7 +36,7 @@ const Profile = () => {
 
 	const mutation = useMutation({
 		mutationFn: async (formData: FormData) => {
-			if (!accessToken) throw new Error("No access token");
+			if (!accessToken) throw new Error("로그인 정보 없음");
 			return updateProfile(formData);
 		},
 		onSuccess: (data: ProfileUpdateResponse) => {

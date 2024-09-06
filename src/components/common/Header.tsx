@@ -8,6 +8,7 @@ const Header = () => {
 	const handleLogout = () => {
 		useAuthStore.getState().setAccessToken(null);
 		localStorage.removeItem("accessToken");
+		localStorage.removeItem("expiresAt");
 		navigate("/login");
 	};
 
