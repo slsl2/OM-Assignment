@@ -98,7 +98,7 @@ const Profile = () => {
 	if (error) return <div>Error: {error instanceof Error ? error.message : "An error occurred"}</div>;
 
 	return (
-		<div className="px-4 py-[100px] w-[80%] mx-auto flex flex-col items-center gap-2">
+		<div className="px-4 py-[100px] w-[80%] max-w-[800px] mx-auto flex flex-col items-center gap-2">
 			<h2 className="font-bold text-[20px] bg-gradient-text p-2 text-white">@{profile?.id}</h2>
 			<img className="w-[120px]" src={avatarPreview || profile?.avatar || "/images/default-avatar.png"} alt="avatar" />
 			<input type="file" accept="image/*" onChange={handleImageChange} />
