@@ -15,7 +15,6 @@ const Login = () => {
 			const response = await login({ id, password });
 			if (response && response.accessToken) {
 				setAccessToken(response.accessToken);
-				localStorage.setItem("accessToken", response.accessToken);
 			}
 			return response;
 		},
@@ -23,7 +22,8 @@ const Login = () => {
 			navigate("/");
 		},
 		onError: (error) => {
-			console.error("Login failed:", error);
+			console.error("로그인 중 오류가 발생했습니다: ", error);
+			alert("아이디나 비밀번호를 확인해주세요.");
 		}
 	});
 
@@ -60,7 +60,6 @@ const Login = () => {
 				>
 					회원가입
 				</button>
-				{mutation.isError && <p>로그인 실패: {mutation.error.message}</p>}
 			</div>
 		</div>
 	);
